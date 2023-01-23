@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Book } from '../../types'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import wishlistSlice from "../../redux/wishlist/wishlistSlice"
-import BookList from './BookList';
+import notificationSlice from "../../redux/notifications/notificationSlice"
 interface BookProps {
     bookItem: Book;
 }
@@ -17,6 +17,11 @@ const formatter = new Intl.ListFormat("en", {style: "long", type: "conjunction"}
   // call dispatcher with id and title of current book
   const handleClick = () => {
     dispatch(wishlistSlice.actions.addWishlist({title: bookItem.title, id: bookItem.id}))
+
+    dispatch(notificationSlice.actions.addNotif({title: bookItem.title, id: bookItem.id}))
+    setTimeout(() => {
+    dispatch(notificationSlice.actions.removeNotif())
+    }, 5000)
   }
 
   const handleExpansion = () => {

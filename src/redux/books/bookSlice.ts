@@ -14,14 +14,7 @@ const bookSlice =  createSlice({
         bookList: [],
         error: null
     },
-    reducers: {
-        getBooks: (state: BookState, action: PayloadAction<Book>) => {
-            state.bookList.push(action.payload)
-        },
-        setLoading: (state: BookState, action: PayloadAction<boolean>) => {
-            state.loading = action.payload
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchBooks.pending, (state: BookState) => {
             state.loading = true;

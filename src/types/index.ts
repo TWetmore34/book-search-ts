@@ -17,6 +17,7 @@ export interface Book {
     description: string;
     imgSrc: string;
     authors: string[];
+    notify: boolean;
 }
 
 export interface BookState {

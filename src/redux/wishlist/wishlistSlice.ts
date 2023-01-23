@@ -9,9 +9,12 @@ const wishlistSlice = createSlice({
             state[action.payload.id] = action.payload
         },
         removeWishlist: (state: WLState, action: PayloadAction<string>) => {
-            console.log(state[action.payload], action.payload)
             delete state[action.payload]
         }
     }
 })
 export default wishlistSlice
+
+// set up notification slice w its reducers
+// call dispatch for notification in sync thunk setup on add/delete wishlist
+// render notification state as long as not empty

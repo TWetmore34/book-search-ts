@@ -122,3 +122,25 @@ form {
   text-decoration: none;
   margin: 5px;
 }
+
+.notification__container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20%;
+}
+
+.notification--item {
+  position: relative;
+  margin: 5px;
+  padding: 10px;
+  background-color: rgba(211, 211, 211, 0.3);
+  border-radius: 10%;
+  opacity: 0;
+}
+
+.notification--transition {
+  opacity: 1;
+}
+
+
