@@ -13,18 +13,6 @@ describe("Wishlist tests", () => {
     },
     notifs: []
 })
-    const { Ui: HomePageUi } = renderWProvider(BookList, {
-        wishlist: {
-            0: {title: "", id: 0}
-        }, books: {
-            loading: false,
-            bookList: [
-                {title: "", author: "", id: "", description: "", publisher:"", publishDate: ""},
-                {title: "", author: "", id: "0", description: "", publisher:"", publishDate: ""}],
-            error: null
-        },
-        notifs: []
-    })
     test("State Loads and renders", () => {
         render(<WishListUi />)
         const liEl = screen.queryAllByRole("list")
