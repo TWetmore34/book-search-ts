@@ -28,10 +28,6 @@ router.post("/", (req, res) => {
     } catch (err) {
         res.status(500).json(err)
     }
-    // db.query(SQL, (err, response) => {
-    //     if(err) res.status(400).json(err)
-    //     res.status(201).json(response)
-    // })
 })
 
 router.post("/login", (req, res) => {

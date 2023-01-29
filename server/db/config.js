@@ -3,7 +3,7 @@ const config = {
     mysql_pool: mysql.createPool({
             host: "localhost",
             user: "root",
-            password: "password1234",
+            password: process.env.DB_CONNECTION,
             database: "books_db"
     })
 }
