@@ -1,7 +1,7 @@
 import React from 'react'
 import { WLBook } from '../../types'
 import { useAppDispatch } from "../../hooks/reduxHooks"
-import wishlistSlice from "../../redux/wishlist/wishlistSlice"
+import { wlDelete } from "../../redux/wishlist/wishlistSlice"
 interface WLBookProps{
     key: string;
     book: WLBook;
@@ -9,7 +9,7 @@ interface WLBookProps{
 const WishlistItem = ({book}: WLBookProps) => {
     const dispatch = useAppDispatch();
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>)=>  {
-        dispatch(wishlistSlice.actions.removeWishlist(book.id))
+        dispatch(wlDelete(book.title))
     }
   return (
     <li className='wishlist--item__container'>

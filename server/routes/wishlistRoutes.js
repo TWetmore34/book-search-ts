@@ -21,14 +21,20 @@ router.post("/", (req, res) => {
     })
 })
 
-router.put("/", (req, res) => {
-    wishlist[req.body.id] = req.body
-    res.json(wishlist)
-})
+// router.put("/", (req, res) => {
+//     wishlist[req.body.id] = req.body
+//     res.json(wishlist)
+// })
 
 router.delete("/", (req, res) => {
-    delete wishlist[req.body.id]
-    res.json(wishlist)
+    const sql = `DELETE FROM book WHERE title = "${req.body.title}"`
+    mySqlConfig.getConnection((err, connection) => {
+        if(err) res.status(500).json(new Error("db connection refused"))
+        connection.query(sql, (err, response) => {
+            if(err) res.status(404).json(new Error("book not found"))
+            res.status(200).json({msg: "book removed", response})
+        })
+    })
 })
 
 module.exports = router;

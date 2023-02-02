@@ -1,3 +1,4 @@
+import { json } from "stream/consumers";
 import { IUser, WLBook } from "../../types";
 const getBooksAPI = async (queryValue: string) => {
 let url: string = `https://www.googleapis.com/books/v1/volumes?q=${queryValue.trim()}&startIndex=0&maxResults=20`
@@ -56,6 +57,19 @@ const getWlByUser = async () => {
     return data
 }
 
+const deleteWLBook = async (title:string) => {
+    let url = "/wishlist"
+    const res = await fetch(url, {
+        method: "DELETE",
+        body: JSON.stringify({title}),
+        headers: {
+            "content-type": "application/json"
+        }
+    })
+    const data = await res.json()
+    return data
+}
+
 const getUser = async () => {
     let url = "/users/loggedin"
     const res = await fetch(url)
@@ -63,4 +77,4 @@ const getUser = async () => {
     return data
 }
 
-export {getBooksAPI, loginAPI, signupAPI, postWlByUser, getWlByUser, getUser}
+export {getBooksAPI, loginAPI, signupAPI, postWlByUser, getWlByUser, deleteWLBook, getUser}

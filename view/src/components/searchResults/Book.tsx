@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Book } from '../../types'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 import { wlPost } from '../../redux/wishlist/wishlistSlice'
+import wishlistReducer from "../../redux/wishlist/wishlistSlice"
 interface BookProps {
     bookItem: Book;
 }
@@ -16,6 +17,10 @@ const formatter = new Intl.ListFormat("en", {style: "long", type: "conjunction"}
   // call dispatcher with id and title of current book
   const handleClick = () => {
     dispatch(wlPost({title: bookItem.title, id: bookItem.id}))
+    setTimeout(() => {
+      console.log("removed")
+      dispatch(wishlistReducer.actions.removeNotif)
+    }, 5000)
   }
 
   const handleExpansion = () => {

@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { WLBook, WLState } from "../../types"
-import { getWlByUser, postWlByUser } from "../api/API";
+import { getWlByUser, postWlByUser, deleteWLBook } from "../api/API";
 export const wlFetch = createAsyncThunk("wishlist/fetch", async () => {
     const data: any = await getWlByUser()
-    console.log(data)
     return data
 })
 export const wlPost = createAsyncThunk("wishlist/add", async (book: WLBook) => {
     const data: any = await postWlByUser(book)
-    console.log(data)
+    console.log(data.code, data)
     if(data.code === "ER_DUP_ENTRY") {
         return false
     }
@@ -17,6 +16,10 @@ export const wlPost = createAsyncThunk("wishlist/add", async (book: WLBook) => {
         return book
     }
     return new Error("Wishlist update failed")
+})
+export const wlDelete = createAsyncThunk("wishlist/delete", async (title: string) => {
+    await deleteWLBook(title)
+    return title
 })
 const wishlistSlice = createSlice({
     name: "wishlist",
@@ -32,6 +35,9 @@ const wishlistSlice = createSlice({
         },
         removeWishlist: (state: WLState, action: PayloadAction<string>) => {
             delete state[action.payload]
+        },
+        removeNotif: (state, action) => {
+            state.notifications.shift()
         }
     },
     extraReducers: (builder) => {
@@ -48,11 +54,16 @@ const wishlistSlice = createSlice({
         builder.addCase(wlPost.fulfilled, (state, action: PayloadAction<any>) => {
             if(action.payload === false) return
             state.notifications.push(action.payload)
-            setTimeout(() => {
-                state.notifications.unshift()
-            },5000)
         })
         builder.addCase(wlPost.rejected, (state, action) => {
+            state.err = action.payload
+        })
+        builder.addCase(wlDelete.fulfilled, (state, action) => {
+            state.list = state.list.filter((book: WLBook) => {
+                return book.title !== action.payload
+            })
+        })
+        builder.addCase(wlDelete.rejected, (state, action) => {
             state.err = action.payload
         })
     }

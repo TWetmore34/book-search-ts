@@ -50,7 +50,6 @@ router.post("/", (req, res) => {
 })
 
 router.post("/login", (req, res) => {
-
     const sql = `SELECT * FROM users WHERE username = "${req.body.username}"`
     mySqlConfig.getConnection((err, response) => {
         if(err) res.status(500).json(err)
@@ -67,7 +66,7 @@ router.post("/login", (req, res) => {
                     res.cookie("jwtToken", token, {httpOnly: true})
                     return res.status(200).json({msg: "logged in"})
             }
-            res.status(404).json({msg: "incorrect username or password"})
+            return res.status(404).json({msg: "incorrect username or password"})
         })
     })
 })
