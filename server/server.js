@@ -11,5 +11,5 @@ dotenv.config()
 
 app.use(routes)
 app.listen(PORT, () => {
-    console.log("app running")
+    console.log("app running on " + PORT)
 })

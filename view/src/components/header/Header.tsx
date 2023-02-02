@@ -5,7 +5,7 @@ const Header = () => {
     <header>
         <ul className='header__container'>
             <li>
-                <Link to="/">
+                <Link to="/home">
                     <h1 className='link--text'>Home</h1>
                 </Link>
             </li>

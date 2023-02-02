@@ -21,8 +21,20 @@ router.post("/", (req, res) => {
         mySqlConfig.getConnection((err, connection) => {
             if (err) res.status(500).json(new Error(err))
             connection.query(SQL, (err, response) => {
-                if(err) res.status(500).json(new Error(err))
-                res.status(201).json(response)
+                if(err) {
+                    if(err.errno === 1062) return res.status(500).json(new Error("username already exists"))
+                    
+                    res.status(500).json(new Error(err))
+                }
+                if(response) {
+                    const token = jwt.sign(
+                        {username: newUser.username, id: response.insertId},
+                        // 1000 ms * 60 = 1min * desired minutes
+                        process.env.PASSWORD_ENCRYPT, {expiresIn: 1000 * 60 * 10}
+                    )
+                
+                    res.status(200).json(token)
+                }
             })
         })
     } catch (err) {
@@ -38,7 +50,6 @@ router.post("/login", (req, res) => {
             if(err) res.status(500).json(err)
             if(user.length === 0) res.status(404).json("user not found")
             const decrypted = CryptoJS.AES.decrypt(user[0].password, process.env.PASSWORD_ENCRYPT).toString(CryptoJS.enc.Utf8)
-            console.log(user[0].id)
             if(decrypted === req.body.password) {
                 const token = jwt.sign(
                     {username: req.body.username, id: user[0].id},

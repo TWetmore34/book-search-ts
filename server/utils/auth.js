@@ -6,7 +6,10 @@ const auth = (req, res, next) => {
     const token = req.headers["authorization"].split(" ")[1]
     if(!token) return res.status(401).json("Not authorized")
     jwt.verify(token, process.env.PASSWORD_ENCRYPT, (err, data) => {
-        if(err) return res.status(401).json(err)
+        if(err) {
+            res.redirect("/")
+            return res.status(401).json(err)
+        }
         req.body.user = data
     })
     next();

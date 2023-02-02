@@ -11,7 +11,6 @@ router.get("/", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-    console.log(req.body.user.id)
     const sql = `INSERT INTO book(title, id, user_id) VALUES("${req.body.title}", "${req.body.id}", ${req.body.user.id});`
     mySqlConfig.getConnection((err, connection) => {
         if(err) res.json(err)

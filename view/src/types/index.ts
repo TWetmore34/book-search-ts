@@ -25,3 +25,8 @@ export interface BookState {
     bookList: Book[];
     error: SerializedError | null;
 }
+
+export interface IUser {
+    username: string;
+    password: string;
+}

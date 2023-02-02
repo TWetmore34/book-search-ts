@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { BookState, Book } from "../../types";
-import bookAPI from "../api/API";
+import { getBooksAPI } from "../api/API";
 
 export const fetchBooks = createAsyncThunk("books/fetchBooks", async (queryString: string) => {
-    let data = await bookAPI(queryString);
+    let data = await getBooksAPI(queryString);
     return data as Book[]
 })
 

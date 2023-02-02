@@ -5,7 +5,7 @@ USE books_db;
 
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100),
+    username VARCHAR(100) UNIQUE,
     -- password will be hashed through routes rather than sql
     password VARCHAR(100)
 );
@@ -18,15 +18,15 @@ CREATE TABLE book (
     REFERENCES users(id)
 );
 
-INSERT INTO users(username, password)
-VALUES ("TJ", "password"), ("not tj", "password");
+-- INSERT INTO users(username, password)
+-- VALUES ("TJ", "password"), ("not tj", "password");
 
-INSERT INTO book(title, id, user_id) 
-VALUES ("Leaves of Grass", "0", 1),
-("dune", "1", 1);
+-- INSERT INTO book(title, id, user_id) 
+-- VALUES ("Leaves of Grass", "0", 1),
+-- ("dune", "1", 1);
 
-SELECT * FROM users;
-SELECT * from book WHERE user_id = 1;
+-- SELECT * FROM users;
+-- SELECT * from book WHERE user_id = 1;
 -- QUERY FOR SPECIFIC USER
 -- SELECT * FROM users WHERE id = ${somevar};
 
