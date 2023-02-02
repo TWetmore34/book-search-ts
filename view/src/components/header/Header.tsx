@@ -14,6 +14,11 @@ const Header = () => {
                     <p className='link--text'>Wishlist</p>
                 </Link>
             </li>
+            <li>
+                <Link to="/">
+                    <p className='link--text'>Login</p>
+                </Link>
+            </li>
         </ul>
     </header>
   )

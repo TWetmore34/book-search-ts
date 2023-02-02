@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { WLBook } from "../../types"
-const notifCycle = createAsyncThunk("notifs/cycle", (book: WLBook) => {
-    return new Promise((res, rej) => {
-    })
-})
 const notificationSlice = createSlice({
     name: "notification",
     initialState: [],

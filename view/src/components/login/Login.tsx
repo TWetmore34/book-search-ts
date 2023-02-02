@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { login, signUp } from '../../redux/user/userSlice'
-import { useAppDispatch } from '../../hooks/reduxHooks'
-import { loginAPI } from '../../redux/api/API'
+// import { login, signUp } from '../../redux/user/userSlice'
+import { loginAPI, signupAPI } from '../../redux/api/API'
 const Login = () => {
-    const dispatch = useAppDispatch()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [createUser, setCreateUser] = useState(true)
@@ -18,9 +16,15 @@ const Login = () => {
         e.preventDefault()
         const newUser = {username, password}
         if(!createUser) {
-            dispatch(login(newUser))
+            // dispatch(login(newUser))
+            loginAPI(newUser).then(res => 
+                console.log(res)
+                )
         } else {
-            dispatch(signUp(newUser))
+            signupAPI(newUser).then(res => 
+                console.log(res)
+                )
+            // dispatch(signUp(newUser))
         }
     }
     const handleSwap = () => {

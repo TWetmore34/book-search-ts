@@ -10,7 +10,13 @@ router.get("/testUsers", (req, res) => {
         })
     })
 })
-
+router.get("/loggedin", (req, res) => {
+    if(req.cookies.jwtToken) {
+        res.status(200).json(true)
+    } else {
+        res.status(200).json(false)
+    }
+})
 router.post("/", (req, res) => {
     const newUser = {
         username: req.body.username,
@@ -32,9 +38,10 @@ router.post("/", (req, res) => {
                         // 1000 ms * 60 = 1min * desired minutes
                         process.env.PASSWORD_ENCRYPT, {expiresIn: 1000 * 60 * 10}
                     )
-                
-                    res.status(200).json(token)
+                    req.cookie("jwtToken", token, {httpOnly: true})
+                    res.status(200).json({msg: "login success"})
                 }
+                res.end()
             })
         })
     } catch (err) {
@@ -43,6 +50,7 @@ router.post("/", (req, res) => {
 })
 
 router.post("/login", (req, res) => {
+
     const sql = `SELECT * FROM users WHERE username = "${req.body.username}"`
     mySqlConfig.getConnection((err, response) => {
         if(err) res.status(500).json(err)
@@ -55,10 +63,11 @@ router.post("/login", (req, res) => {
                     {username: req.body.username, id: user[0].id},
                     // 1000 ms * 60 = 1min * desired minutes
                     process.env.PASSWORD_ENCRYPT, {expiresIn: 1000 * 60 * 10}
-                )
-            
-                res.status(200).json({token})
+                    )
+                    res.cookie("jwtToken", token, {httpOnly: true})
+                    return res.status(200).json({msg: "logged in"})
             }
+            res.status(404).json({msg: "incorrect username or password"})
         })
     })
 })

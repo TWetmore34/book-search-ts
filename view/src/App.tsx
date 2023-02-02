@@ -1,6 +1,5 @@
 import BookList from './components/searchResults/BookList';
 import Wishlist from './components/wishlist/Wishlist';
-import Search from './components/searchResults/Search';
 import Header from './components/header/Header';
 import Login from './components/login/Login';
 import './App.css';
@@ -15,10 +14,7 @@ function App() {
         <Routes>
         <Route path="/" element={<Login />}/>
         <Route path='/home' element={
-          <>
-          <Search />
           <BookList />
-          </>
         }/>
         <Route path='/wishlist' element={
         <div className="app__container">
